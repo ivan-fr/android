@@ -1,10 +1,10 @@
 package com.wayoukiss.android.core.network.interceptors
 
 import com.wayoukiss.android.core.security.TokenManager
-import okhttp3.Interceptor
-import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
+import okhttp3.Interceptor
+import okhttp3.Response
 
 @Singleton
 class AuthInterceptor @Inject constructor(

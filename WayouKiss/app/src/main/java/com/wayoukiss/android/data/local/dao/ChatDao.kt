@@ -1,72 +1,48 @@
 package com.wayoukiss.android.data.local.dao
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.wayoukiss.android.data.local.entity.ChatMessageEntity
-import com.wayoukiss.android.data.local.entity.ChatRoomEntity
+import com.wayoukiss.android.data.local.entity.ChatEntity
+import com.wayoukiss.android.data.local.entity.ChatWithMessages
 import kotlinx.coroutines.flow.Flow
-import java.util.UUID
 
 @Dao
-interface ChatDao : BaseDao<ChatRoomEntity> {
+interface ChatDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertChat(chat: ChatEntity)
 
-    @Query(
-        "SELECT * FROM chat_rooms " +
-        "ORDER BY lastMessageTime DESC"
-    )
-    fun getChatRooms(): Flow<List<ChatRoomEntity>>
+    @Query("SELECT * FROM chats")
+    fun observeAllChats(): Flow<List<ChatEntity>>
 
-    @Query(
-        "SELECT * FROM chat_rooms " +
-        "WHERE id = :roomId"
-    )
-    fun getChatRoom(roomId: UUID): Flow<ChatRoomEntity?>
-
-    @Query(
-        "SELECT * FROM chat_messages " +
-        "WHERE roomId = :roomId " +
-        "ORDER BY sentAt DESC"
-    )
-    fun getMessages(roomId: UUID): PagingSource<Int, ChatMessageEntity>
-
-    @Query(
-        "UPDATE chat_messages " +
-        "SET readAt = :readAt " +
-        "WHERE roomId = :roomId " +
-        "AND senderId != :currentUserId " +
-        "AND readAt IS NULL"
-    )
-    suspend fun markMessagesAsRead(
-        roomId: UUID,
-        currentUserId: UUID,
-        readAt: Long
-    )
+    @Query("SELECT * FROM chats WHERE id = :chatId")
+    suspend fun getChatById(chatId: String): ChatEntity?
 
     @Transaction
-    suspend fun insertMessage(
-        message: ChatMessageEntity,
-        updateRoom: ChatRoomEntity
-    ) {
-        insert(message)
-        update(updateRoom)
-    }
-
     @Query(
-        "SELECT COUNT(*) FROM chat_messages " +
-        "WHERE roomId = :roomId " +
-        "AND senderId != :currentUserId " +
-        "AND readAt IS NULL"
+        """
+        SELECT c.* FROM chats c 
+        INNER JOIN messages m ON c.id = m.chatId 
+        WHERE m.timestamp > :timestamp
+        GROUP BY c.id
+        """
     )
-    fun getUnreadCount(
-        roomId: UUID,
-        currentUserId: UUID
-    ): Flow<Int>
+    fun observeChatsWithRecentMessages(
+        timestamp: Long
+    ): Flow<List<ChatWithMessages>>
 
+    @Transaction
     @Query(
-        "DELETE FROM chat_messages " +
-        "WHERE roomId = :roomId"
+        """
+        SELECT c.* FROM chats c 
+        LEFT JOIN messages m ON c.id = m.chatId 
+        GROUP BY c.id
+        """
     )
-    suspend fun clearMessages(roomId: UUID)
+    fun observeChatsWithMessages(): Flow<List<ChatWithMessages>>
+
+    @Query("DELETE FROM chats WHERE id = :chatId")
+    suspend fun deleteChatById(chatId: String)
 }
