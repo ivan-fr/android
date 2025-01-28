@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="8.0">
+    <file name="/Users/ivanbesevic/Documents/projet/android/WayouKiss/app/build.gradle.kts">
+        <error line="80" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="88" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="93" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="99" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="104" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="107" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="113" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+        <error line="117" column="1" severity="error" message="Trailing space(s)" source="no-trailing-spaces" />
+    </file>
+</checkstyle>

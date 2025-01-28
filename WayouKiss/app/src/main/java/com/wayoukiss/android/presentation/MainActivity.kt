@@ -6,8 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.wayoukiss.android.presentation.theme.WayouKissTheme
+import androidx.compose.ui.tooling.preview.Preview
+import com.wayoukiss.android.presentation.theme.wayouKissTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,14 +18,30 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WayouKissTheme {
+            wayouKissTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // TODO: Add NavHost here
+                    greeting("Android")
                 }
             }
         }
+    }
+}
+
+@Composable
+fun greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun greetingPreview() {
+    wayouKissTheme {
+        greeting("Android")
     }
 }
