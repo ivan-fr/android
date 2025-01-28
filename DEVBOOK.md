@@ -171,11 +171,35 @@ This devbook contains detailed development steps for implementing the WayouKiss 
 - [x] Add string resources for authentication
 - [x] Set up dependency injection with Hilt
 
-### 2.4 Testing (TODO)
-- [ ] Unit tests for AuthRepository
-- [ ] Unit tests for AuthViewModel
-- [ ] Integration tests for authentication flow
-- [ ] UI tests for AuthScreen
+### 2.4 Testing
+- [x] Unit tests for AuthRepository
+  ```kotlin
+  - signInWithGoogle with valid token returns success
+  - signInWithGoogle with network error returns NetworkError
+  - signInWithGoogle with invalid credentials returns InvalidCredentials
+  - signOut clears tokens
+  - observeAuthState emits correct authentication state
+  ```
+- [x] Unit tests for AuthViewModel
+  ```kotlin
+  - signInWithGoogle emits loading then success states
+  - signInWithGoogle emits loading then error states
+  - signOut resets state to initial
+  ```
+- [x] Integration tests for authentication flow
+  ```kotlin
+  - successfulGoogleSignInFlow
+  - failedGoogleSignInFlow
+  - signOutFlow
+  - tokenRefreshFlow
+  ```
+- [x] UI tests for AuthScreen
+  ```kotlin
+  - initialStateShowsWelcomeMessageAndSignInButton
+  - loadingStateShowsProgressIndicator
+  - errorStateShowsErrorMessageAndRetryButton
+  - successStateTriggersCallback
+  ```
 
 ## 3. Profile Module
 

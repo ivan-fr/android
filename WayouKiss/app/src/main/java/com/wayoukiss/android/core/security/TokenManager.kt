@@ -7,6 +7,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 @Singleton
@@ -25,6 +27,22 @@ class TokenManager @Inject constructor(
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
+    suspend fun saveToken(accessToken: String) {
+        withContext(Dispatchers.IO) {
+            sharedPreferences.edit()
+                .putString(KEY_ACCESS_TOKEN, accessToken)
+                .apply()
+        }
+    }
+
+    suspend fun saveRefreshToken(refreshToken: String) {
+        withContext(Dispatchers.IO) {
+            sharedPreferences.edit()
+                .putString(KEY_REFRESH_TOKEN, refreshToken)
+                .apply()
+        }
+    }
+
     suspend fun saveTokens(accessToken: String, refreshToken: String) {
         withContext(Dispatchers.IO) {
             sharedPreferences.edit()
@@ -34,12 +52,36 @@ class TokenManager @Inject constructor(
         }
     }
 
+    fun getToken(): Flow<String?> = flow {
+        emit(sharedPreferences.getString(KEY_ACCESS_TOKEN, null))
+    }
+
+    fun getTokenBlocking(): String? {
+        return sharedPreferences.getString(KEY_ACCESS_TOKEN, null)
+    }
+
     suspend fun getAccessToken(): String? = withContext(Dispatchers.IO) {
         sharedPreferences.getString(KEY_ACCESS_TOKEN, null)
     }
 
     suspend fun getRefreshToken(): String? = withContext(Dispatchers.IO) {
         sharedPreferences.getString(KEY_REFRESH_TOKEN, null)
+    }
+
+    suspend fun deleteToken() {
+        withContext(Dispatchers.IO) {
+            sharedPreferences.edit()
+                .remove(KEY_ACCESS_TOKEN)
+                .apply()
+        }
+    }
+
+    suspend fun deleteRefreshToken() {
+        withContext(Dispatchers.IO) {
+            sharedPreferences.edit()
+                .remove(KEY_REFRESH_TOKEN)
+                .apply()
+        }
     }
 
     suspend fun clearTokens() {

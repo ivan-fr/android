@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.wayoukiss.android.data.local.converter.DateConverter
+import com.wayoukiss.android.data.local.converter.UUIDConverter
 import java.util.Date
 import java.util.UUID
 
@@ -28,6 +31,7 @@ import java.util.UUID
         Index(value = ["user2Id"])
     ]
 )
+@TypeConverters(DateConverter::class, UUIDConverter::class)
 data class MatchEntity(
     @PrimaryKey
     val id: UUID,

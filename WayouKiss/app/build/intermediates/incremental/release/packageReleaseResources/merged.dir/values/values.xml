@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WayouKiss</string>
+    <string name="invalid_credentials">Invalid credentials. Please try again</string>
+    <string name="network_error">Please check your internet connection</string>
+    <string name="server_error">Server error occurred. Please try again later</string>
+    <string name="session_expired">Session expired. Please sign in again</string>
+    <string name="sign_in_error">Sign in failed: %1$s</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="signing_in">Signing in…</string>
+    <string name="welcome_message">Welcome to WayouKiss</string>
+    <style name="Theme.WayouKiss" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

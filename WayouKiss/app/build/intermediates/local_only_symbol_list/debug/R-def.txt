@@ -1,0 +1,16 @@
+R_DEF: Internal format may change without notice
+local
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string invalid_credentials
+string network_error
+string server_error
+string session_expired
+string sign_in_error
+string sign_in_with_google
+string signing_in
+string welcome_message
+style Theme.WayouKiss
+xml backup_rules
+xml data_extraction_rules

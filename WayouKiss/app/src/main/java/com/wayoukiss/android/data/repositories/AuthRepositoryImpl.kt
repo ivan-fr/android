@@ -55,7 +55,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun refreshToken(): Boolean {
         return try {
-            val currentRefreshToken = tokenManager.getRefreshToken().first()
+            val currentRefreshToken = tokenManager.getRefreshToken()
             if (currentRefreshToken == null) {
                 false
             } else {
@@ -63,6 +63,17 @@ class AuthRepositoryImpl @Inject constructor(
                 tokenManager.saveToken(response.accessToken)
                 tokenManager.saveRefreshToken(response.refreshToken)
                 true
+            }
+        } catch (e: IOException) {
+            false
+        } catch (e: HttpException) {
+            when (e.code()) {
+                401 -> {
+                    tokenManager.deleteToken()
+                    tokenManager.deleteRefreshToken()
+                    false
+                }
+                else -> false
             }
         } catch (e: Exception) {
             false

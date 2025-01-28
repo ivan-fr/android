@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "com.wayoukiss.android.app-merged_res-65:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.wayoukiss.android.app-main-67:/mipmap-anydpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.wayoukiss.android.app-merged_res-65:/xml_backup_rules.xml.flat",
+        "source": "com.wayoukiss.android.app-main-67:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.wayoukiss.android.app-merged_res-65:/xml_data_extraction_rules.xml.flat",
+        "source": "com.wayoukiss.android.app-main-67:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.wayoukiss.android.app-merged_res-65:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.wayoukiss.android.app-main-67:/mipmap-anydpi/ic_launcher.xml"
+    }
+]
